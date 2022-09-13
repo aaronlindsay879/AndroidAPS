@@ -1071,6 +1071,10 @@ var determine_basal = function determine_basal(glucose_status, currenttemp, iob_
                 console.error("profile.maxSMBBasalMinutes:",profile.maxSMBBasalMinutes,"profile.current_basal:",profile.current_basal);
                 maxBolus = round( profile.current_basal * profile.maxSMBBasalMinutes / 60 ,1);
             }
+
+            // min SMB maximum = 0.5u
+            maxBolus = Math.max(maxBolus, 0.5);
+
             // bolus 1/2 the insulinReq, up to maxBolus, rounding down to nearest bolus increment
             var roundSMBTo = 1 / profile.bolus_increment;
             var microBolus = Math.floor(Math.min(insulinReq/2,maxBolus)*roundSMBTo)/roundSMBTo;

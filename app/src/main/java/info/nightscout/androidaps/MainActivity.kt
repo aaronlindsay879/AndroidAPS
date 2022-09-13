@@ -40,7 +40,6 @@ import info.nightscout.androidaps.events.EventRebuildTabs
 import info.nightscout.androidaps.interfaces.*
 import info.nightscout.androidaps.logging.UserEntryLogger
 import info.nightscout.androidaps.plugins.configBuilder.ConstraintChecker
-import info.nightscout.androidaps.plugins.constraints.signatureVerifier.SignatureVerifierPlugin
 import info.nightscout.androidaps.plugins.constraints.versionChecker.VersionCheckerUtils
 import info.nightscout.androidaps.plugins.general.nsclient.data.NSSettingsStatus
 import info.nightscout.androidaps.plugins.general.smsCommunicator.SmsCommunicatorPlugin
@@ -81,7 +80,6 @@ class MainActivity : NoSplashAppCompatActivity() {
     @Inject lateinit var protectionCheck: ProtectionCheck
     @Inject lateinit var iconsProvider: IconsProvider
     @Inject lateinit var constraintChecker: ConstraintChecker
-    @Inject lateinit var signatureVerifierPlugin: SignatureVerifierPlugin
     @Inject lateinit var config: Config
     @Inject lateinit var uel: UserEntryLogger
     @Inject lateinit var profileFunction: ProfileFunction
@@ -427,8 +425,6 @@ class MainActivity : NoSplashAppCompatActivity() {
         fabricPrivacy.firebaseAnalytics.setUserProperty("Version", BuildConfig.VERSION)
         fabricPrivacy.firebaseAnalytics.setUserProperty("HEAD", BuildConfig.HEAD)
         fabricPrivacy.firebaseAnalytics.setUserProperty("Remote", remote)
-        val hashes: List<String> = signatureVerifierPlugin.shortHashes()
-        if (hashes.isNotEmpty()) fabricPrivacy.firebaseAnalytics.setUserProperty("Hash", hashes[0])
         activePlugin.activePump.let { fabricPrivacy.firebaseAnalytics.setUserProperty("Pump", it::class.java.simpleName) }
         if (!config.NSCLIENT && !config.PUMPCONTROL)
             activePlugin.activeAPS.let { fabricPrivacy.firebaseAnalytics.setUserProperty("Aps", it::class.java.simpleName) }
@@ -443,7 +439,6 @@ class MainActivity : NoSplashAppCompatActivity() {
         FirebaseCrashlytics.getInstance().setCustomKey("BuildFlavor", BuildConfig.FLAVOR)
         FirebaseCrashlytics.getInstance().setCustomKey("Remote", remote)
         FirebaseCrashlytics.getInstance().setCustomKey("Committed", BuildConfig.COMMITTED)
-        FirebaseCrashlytics.getInstance().setCustomKey("Hash", hashes[0])
         FirebaseCrashlytics.getInstance().setCustomKey("Email", sp.getString(R.string.key_email_for_crash_report, ""))
     }
 

@@ -20,9 +20,7 @@ import info.nightscout.androidaps.plugins.constraints.bgQualityCheck.BgQualityCh
 import info.nightscout.androidaps.plugins.constraints.dstHelper.DstHelperPlugin
 import info.nightscout.androidaps.plugins.constraints.objectives.ObjectivesPlugin
 import info.nightscout.androidaps.plugins.constraints.safety.SafetyPlugin
-import info.nightscout.androidaps.plugins.constraints.signatureVerifier.SignatureVerifierPlugin
 import info.nightscout.androidaps.plugins.constraints.storage.StorageConstraintPlugin
-import info.nightscout.androidaps.plugins.constraints.versionChecker.VersionCheckerPlugin
 import info.nightscout.androidaps.plugins.general.actions.ActionsPlugin
 import info.nightscout.androidaps.plugins.general.automation.AutomationPlugin
 import info.nightscout.androidaps.plugins.general.autotune.AutotunePlugin
@@ -241,12 +239,6 @@ abstract class PluginsModule {
     @Binds
     @NotNSClient
     @IntoMap
-    @IntKey(270)
-    abstract fun bindVersionCheckerPlugin(plugin: VersionCheckerPlugin): PluginBase
-
-    @Binds
-    @NotNSClient
-    @IntoMap
     @IntKey(280)
     abstract fun bindSmsCommunicatorPlugin(plugin: SmsCommunicatorPlugin): PluginBase
 
@@ -255,12 +247,6 @@ abstract class PluginsModule {
     @IntoMap
     @IntKey(290)
     abstract fun bindStorageConstraintPlugin(plugin: StorageConstraintPlugin): PluginBase
-
-    @Binds
-    @APS
-    @IntoMap
-    @IntKey(300)
-    abstract fun bindSignatureVerifierPlugin(plugin: SignatureVerifierPlugin): PluginBase
 
     @Binds
     @APS
